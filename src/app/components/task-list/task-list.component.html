@@ -1,0 +1,15 @@
+<div class="task-list">
+  <app-task-filter></app-task-filter>
+  <ul>
+    <li>
+      @for (task of tasks ; track task.id) {
+      <app-task-item
+        [task]="task"
+        (delete)="deleteTask(task.id)"
+        (toggle)="toggleTaskCompletion(task.id)"
+      ></app-task-item>
+      }
+    </li>
+  </ul>
+  <app-task-form></app-task-form>
+</div>

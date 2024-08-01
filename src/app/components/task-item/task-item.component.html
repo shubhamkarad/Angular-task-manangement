@@ -1,0 +1,8 @@
+<div class="task-item">
+  <h3 [class.completed]="task.completed">{{ task.title }}</h3>
+  <p>{{ task.description }}</p>
+  <button (click)="toggleCompletion()">
+    {{ task.completed ? "Mark as Incomplete" : "Mark as Complete" }}
+  </button>
+  <button (click)="deleteTask()">Delete</button>
+</div>
