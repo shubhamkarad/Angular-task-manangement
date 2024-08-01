@@ -1,8 +1,43 @@
-<div class="task-item">
+<!-- <div class="task-item">
   <h3 [class.completed]="task.completed">{{ task.title }}</h3>
   <p>{{ task.description }}</p>
   <button (click)="toggleCompletion()">
     {{ task.completed ? "Mark as Incomplete" : "Mark as Complete" }}
   </button>
   <button (click)="deleteTask()">Delete</button>
+  <a routerLink="/add-task"><button>Add Task</button></a>
+</div> -->
+
+<div
+  class="mb-4 mr-4 max-w-sm p-6 bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700"
+  [class.completed]="task.completed"
+>
+  <h5
+    class="mb-2 text-2xl font-bold tracking-tight text-gray-900 dark:text-white"
+  >
+    {{ task.title }}
+  </h5>
+  <p class="mb-3 font-normal text-gray-700 dark:text-gray-400">
+    {{ task.description }}
+  </p>
+  <button
+    routerLink="/edit-task/{{ task.id }}"
+    href="#"
+    class="mr-2 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-black bg-transparent border rounded-lg hover:bg-white-800 focus:ring-4 focus:outline-none focus:ring-white-300 dark:bg-white-600 dark:hover:bg-white-700 dark:focus:ring-white-800"
+  >
+    Edit
+  </button>
+  <button
+    (click)="toggleCompletion()"
+    href="#"
+    class="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-700 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800"
+  >
+    {{ task.completed ? "Mark as Incomplete" : "Mark as Complete" }}
+  </button>
+  <button
+    class="ml-2 mt-2 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-700 rounded-lg hover:bg-red-800 focus:ring-4 focus:outline-none focus:ring-red-300 dark:bg-red-600 dark:hover:bg-red-700 dark:focus:ring-red-800"
+    (click)="deleteTask()"
+  >
+    Delete
+  </button>
 </div>

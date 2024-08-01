@@ -1,1 +1,32 @@
-<p>task-filter works!</p>
+<div class="task-filter mb-4 border-b border-gray-200 dark:border-gray-700">
+  <button
+    (click)="setFilter('all')"
+    [class.active]="filterStatus === 'all'"
+    class="inline-block p-4 border-b-2 rounded-t-lg me-2"
+  >
+    All
+  </button>
+  <button
+    (click)="setFilter('completed')"
+    [class.active]="filterStatus === 'completed'"
+    class="inline-block p-4 border-b-2 rounded-t-lg me-2"
+  >
+    Completed
+  </button>
+  <button
+    (click)="setFilter('incomplete')"
+    [class.active]="filterStatus === 'incomplete'"
+    class="inline-block p-4 border-b-2 rounded-t-lg me-2"
+  >
+    Incomplete <fa-icon [icon]="faCoffee"></fa-icon>
+  </button>
+  <!-- <ul>
+    <li>
+      @for(task of filteredTasks; track task.id) {
+      <div class="p-4 rounded-lg bg-gray-50">
+        {{ task.title }} - {{ task.completed ? "Completed" : "Incomplete" }}
+      </div>
+      }
+    </li> -->
+  <!-- </ul> -->
+</div>

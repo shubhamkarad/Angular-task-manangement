@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject, EMPTY, Observable, map, tap } from 'rxjs';
 import { Task } from '../models/task';
 import { HttpClient } from '@angular/common/http';
 
@@ -23,6 +23,10 @@ export class TaskService {
     });
   }
 
+  getTaskById(id: string): Observable<Task> {
+    return this.http.get<Task>(`${this.apiUrl}/${id}`);
+  }
+
   getTasks(): Observable<Task[]> {
     return this.tasks$;
   }
@@ -34,31 +38,44 @@ export class TaskService {
     });
   }
 
-  updateTask(updatedTask: Task): void {
-    this.http
+  updateTask(updatedTask: Task): Observable<Task> {
+    return this.http
       .put<Task>(`${this.apiUrl}/${updatedTask.id}`, updatedTask)
-      .subscribe((task) => {
-        const tasks = this.tasksSubject.value.map((t) =>
-          t.id === task.id ? task : t
-        );
-        this.tasksSubject.next(tasks);
-      });
+      .pipe(
+        map((task) => {
+          const tasks = this.tasksSubject.value.map((t) =>
+            t.id === task.id ? task : t
+          );
+          this.tasksSubject.next(tasks);
+          return task;
+        })
+      );
   }
 
-  deleteTask(id: number): void {
+  deleteTask(id: string): void {
     this.http.delete(`${this.apiUrl}/${id}`).subscribe(() => {
       const tasks = this.tasksSubject.value.filter((t) => t.id !== id);
       this.tasksSubject.next(tasks);
     });
   }
 
-  toggleTaskCompletion(id: number): void {
+  toggleTaskCompletion(id: string): Observable<Task> {
     const tasks = this.tasksSubject.value.map((task) =>
       task.id === id ? { ...task, completed: !task.completed } : task
     );
     const updatedTask = tasks.find((task) => task.id === id);
     if (updatedTask) {
-      this.updateTask(updatedTask);
+      return this.http
+        .put<Task>(`${this.apiUrl}/${updatedTask.id}`, updatedTask)
+        .pipe(
+          tap((task) => {
+            const updatedTasks = this.tasksSubject.value.map((t) =>
+              t.id === task.id ? task : t
+            );
+            this.tasksSubject.next(updatedTasks);
+          })
+        );
     }
+    return EMPTY;
   }
 }

@@ -1,18 +1,7 @@
-<header>
-  <h1>Task Management App</h1>
-</header>
+<app-header></app-header>
 
-<nav>
-  <ul>
-    <li><a routerLink="/tasks" routerLinkActive="active">Task List</a></li>
-    <li><a routerLink="/add-task" routerLinkActive="active">Add Task</a></li>
-  </ul>
-</nav>
-
-<main>
+<main class="container h-[80vh]">
   <router-outlet></router-outlet>
 </main>
 
-<footer>
-  <p>&copy; 2024 Task Management App By Shubham Karad</p>
-</footer>
+<app-footer></app-footer>
