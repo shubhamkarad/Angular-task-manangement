@@ -25,7 +25,10 @@ export class TaskListComponent {
   tasks: Task[] = [];
   subscription!: Subscription;
   filteredTasks: Task[] = this.tasks;
-  currentFilter: string = 'all';
+  currentFilter: { status: string; searchTerm: string } = {
+    status: 'all',
+    searchTerm: '',
+  };
 
   constructor(private apiService: TaskService) {
     this.tasks$ = this.apiService.getTasks();
@@ -37,21 +40,36 @@ export class TaskListComponent {
 
   ngOnInit(): void {}
 
-  onFilterChange(filter: string) {
+  onFilterChange(filter: { status: string; searchTerm: string }) {
     this.currentFilter = filter; // Update the current filter state
     this.applyFilter(filter);
   }
-  applyFilter(filter: string) {
-    switch (filter) {
-      case 'completed':
-        this.filteredTasks = this.tasks.filter((task) => task.completed);
-        break;
-      case 'incomplete':
-        this.filteredTasks = this.tasks.filter((task) => !task.completed);
-        break;
-      default:
-        this.filteredTasks = this.tasks;
-    }
+  // applyFilter(filter: string) {
+  //   switch (filter) {
+  //     case 'completed':
+  //       this.filteredTasks = this.tasks.filter((task) => task.completed);
+  //       break;
+  //     case 'incomplete':
+  //       this.filteredTasks = this.tasks.filter((task) => !task.completed);
+  //       break;
+  //     default:
+  //       this.filteredTasks = this.tasks;
+  //   }
+  // }
+  applyFilter(filter: { status: string; searchTerm: string }): void {
+    this.currentFilter = filter;
+    this.filteredTasks = this.tasks.filter((task) => {
+      const matchesStatus =
+        filter.status === 'all' ||
+        (filter.status === 'completed' && task.completed) ||
+        (filter.status === 'incomplete' && !task.completed);
+
+      const matchesSearchTerm =
+        !filter.searchTerm ||
+        task.title.toLowerCase().includes(filter.searchTerm.toLowerCase());
+
+      return matchesStatus && matchesSearchTerm;
+    });
   }
 
   deleteTask(id: string): void {

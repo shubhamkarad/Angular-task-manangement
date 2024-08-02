@@ -1,12 +1,19 @@
-import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  Output,
+  EventEmitter,
+  NgModule,
+} from '@angular/core';
 import { Task } from '../../models/task';
 import { TaskService } from '../../service/task.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faCoffee } from '@fortawesome/free-solid-svg-icons';
+import { FormsModule, NgModel } from '@angular/forms';
 @Component({
   selector: 'app-task-filter',
   standalone: true,
-  imports: [FontAwesomeModule],
+  imports: [FontAwesomeModule, FormsModule],
   templateUrl: './task-filter.component.html',
   styleUrl: './task-filter.component.scss',
 })
@@ -15,8 +22,9 @@ export class TaskFilterComponent implements OnInit {
   tasks: Task[] = [];
   filteredTasks: Task[] = [];
   filterStatus: string = 'all';
-
-  @Output() filterChange: EventEmitter<string> = new EventEmitter<string>();
+  searchTerm: string = '';
+  @Output() filterChange: EventEmitter<{ status: string; searchTerm: string }> =
+    new EventEmitter<{ status: string; searchTerm: string }>();
 
   constructor(private apiService: TaskService) {}
   ngOnInit(): void {
@@ -27,16 +35,20 @@ export class TaskFilterComponent implements OnInit {
   }
 
   setFilter(status: string): void {
-    this.filterChange.emit(status);
+    this.filterChange.emit({
+      status: status,
+      searchTerm: this.searchTerm,
+    });
     this.filterStatus = status;
   }
-  // filterTasks(): void {
-  //   if (this.filterStatus === 'all') {
-  //     this.filteredTasks = this.tasks;
-  //   } else if (this.filterStatus === 'completed') {
-  //     this.filteredTasks = this.tasks.filter((task) => task.completed);
-  //   } else {
-  //     this.filteredTasks = this.tasks.filter((task) => !task.completed);
-  //   }
-  // }
+  onSearchTermChange(): void {
+    this.emitFilterChange();
+  }
+
+  private emitFilterChange(): void {
+    this.filterChange.emit({
+      status: this.filterStatus,
+      searchTerm: this.searchTerm,
+    });
+  }
 }

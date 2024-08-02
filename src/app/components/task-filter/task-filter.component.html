@@ -21,6 +21,13 @@
     Incomplete
     <!-- <fa-icon [icon]="faCoffee"></fa-icon> -->
   </button>
+  <input
+    class="rounded-lg"
+    type="text"
+    [(ngModel)]="searchTerm"
+    (input)="onSearchTermChange()"
+    placeholder="Search by name..."
+  />
   <!-- <ul>
     <li>
       @for(task of filteredTasks; track task.id) {
