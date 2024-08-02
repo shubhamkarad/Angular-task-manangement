@@ -1,7 +1,7 @@
 <div class="task-list h-full">
   @if(tasks.length === 0) {
   <div class="flex flex-col items-center justify-center h-full">
-    <h3>No task added yet! click on the below button to add new Task</h3>
+    <h3>No task added yet! click on the below button to a add new Task</h3>
     <button
       routerLink="/add-task"
       routerLinkActive="active"
@@ -13,6 +13,9 @@
   } @else {
   <div>
     <app-task-filter (filterChange)="onFilterChange($event)"></app-task-filter>
+    @if(filteredTasks.length === 0) {
+    <h2 class="p-4">No Task Found Here!</h2>
+    }
     <div class="flex justify-start flex-wrap hover: cursor-pointer">
       @for (task of filteredTasks ; track task.id) {
       <app-task-item

@@ -18,13 +18,13 @@
 </form> -->
 
 <section class="text-gray-600 body-font">
-  <div class="container px-5 py-24 mx-auto flex items-center">
-    <div class="md:pr-16 lg:pr-0 pr-0">
+  <div class="container rounded-md py-16 mx-auto flex items-center bg-gray-100">
+    <div class="md:pr-14 lg:pr-0 pr-0 w-[350px]">
       <h1 class="title-font font-medium text-3xl text-gray-900">
         Add your Task
       </h1>
-      <p class="leading-relaxed mt-4">
-        Poke slow-carb mixtape knausgaard, typewriter street art gentrify
+      <p class="leading-relaxed mt-4 w-full">
+        Create a Task with some description
       </p>
     </div>
     <div class="w-full">
@@ -59,7 +59,7 @@
               id="description"
               formControlName="description"
               cols="30"
-              rows="10"
+              rows="5"
               class="w-full bg-white rounded border border-gray-300 focus:border-indigo-500 focus:ring-2 focus:ring-indigo-200 text-base outline-none text-gray-700 py-1 px-3 leading-8 transition-colors duration-200 ease-in-out"
             ></textarea>
             @if(taskForm.get('description')?.invalid &&

@@ -21,20 +21,6 @@ import { RouterLink } from '@angular/router';
   styleUrl: './task-list.component.scss',
 })
 export class TaskListComponent {
-  // tasks: Task[] = [
-  //   {
-  //     id: 1,
-  //     title: 'Sample Task 1',
-  //     description: 'This is a sample task',
-  //     completed: false,
-  //   },
-  //   {
-  //     id: 2,
-  //     title: 'Sample Task 2',
-  //     description: 'Another sample task',
-  //     completed: true,
-  //   },
-  // ];
   tasks$: Observable<Task[]>;
   tasks: Task[] = [];
   subscription!: Subscription;
